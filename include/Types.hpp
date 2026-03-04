@@ -11,6 +11,7 @@ namespace quant {
 
     struct Tick {
         std::string ticker;
+        Side side;
         double price;
         int quantity;
         Timestamp timestamp;
@@ -27,4 +28,13 @@ namespace quant {
         double price;
         int quantity;
     };
+
+    // This "teaches" C++ how to print the Side enum
+    inline std::ostream& operator<<(std::ostream& os, const Side& side) {
+        switch (side) {
+            case Side::BUY:  return os << "BUY";
+            case Side::SELL: return os << "SELL";
+            default:         return os << "UNKNOWN";
+        }
+    }
 }

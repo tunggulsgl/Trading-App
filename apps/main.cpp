@@ -22,10 +22,12 @@ int main() {
     std::jthread consumerThread([&]() {
         Tick t;
         while (tickQueue.pop(t)) {
-            Side side = (t.quantity % 2 == 0) ? Side::SELL : Side::BUY;
-            appleBook.update(side, t.price, t.quantity);
+            //Side side = (t.quantity % 2 == 0) ? Side::SELL : Side::BUY;
+            //appleBook.update(side, t.price, t.quantity);
+            appleBook.update(t.side, t.price, t.quantity);
 
             auto order = strategy.onMarketUpdate(t.ticker, appleBook);
+
             if (order && risk.validateOrder(*order) == RiskResult::APPROVED) {
                 std::cout << "[EXECUTION] Thread ID: " << std::this_thread::get_id()
                           << " | BUY " << order->ticker << " @ " << order->price << std::endl;
@@ -39,7 +41,7 @@ int main() {
     for (const auto& tick : ticks) {
         tickQueue.push(tick);
         // Simulate real-world delay between market events
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
     tickQueue.setFinished(); // Tell the consumer we are done

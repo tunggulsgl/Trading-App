@@ -33,6 +33,13 @@ namespace quant {
                     tick.quantity = std::stoi(qtyStr);
                     tick.timestamp = std::chrono::high_resolution_clock::now();
 
+                    // REAL PARSING LOGIC:
+                    if (sideStr == "BUY") {
+                        tick.side = Side::BUY;
+                    } else {
+                        tick.side = Side::SELL;
+                    }
+
                     ticks.push_back(tick);
                 }
 

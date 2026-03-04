@@ -1,3 +1,4 @@
+#include <iostream>
 #include <SpreadStrategy.hpp>
 
 namespace quant {

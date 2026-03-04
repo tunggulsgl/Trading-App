@@ -1,8 +1,10 @@
 #include "OrderBook.hpp"
 #include <algorithm>
+#include <iostream>
 
 namespace quant {
     void OrderBook::update(Side side, double price, int quantity) {
+        // std::cout << side << " " << price << " " << quantity << std::endl;
         if (side == Side::BUY) {
             if (quantity == 0) {
                 bids.erase(price);
